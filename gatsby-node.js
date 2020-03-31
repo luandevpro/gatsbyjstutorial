@@ -16,7 +16,7 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
       }
     }
   `).then(({ data }) => {
-    data.swapi.post.map(post =>
+    data.swapi.post.map(post => {
       createPage({
         path: `/post/${post.id}`,
         component: path.resolve(`./src/components/postLayout.js`),
@@ -24,6 +24,6 @@ exports.createPages = async ({ graphql, actions: { createPage } }) => {
           slug: `${post.id}`,
         },
       })
-    )
+    })
   })
 }
