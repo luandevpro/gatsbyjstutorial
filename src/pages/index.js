@@ -1,37 +1,46 @@
 import React from "react"
 import { Link, graphql, useStaticQuery } from "gatsby"
 
-import Layout from "../components/layout"
-import Image from "../components/image"
-import SEO from "../components/seo"
-
 const IndexPage = () => {
   const data = useStaticQuery(graphql`
     query MyQuery {
-      site {
-        siteMetadata {
+      swapi {
+        post {
+          id
+          link
           title
+          updatedAt
+          userId
           description
-          author
+          createdAt
         }
-        host
-        buildTime
-        port
       }
     }
   `)
-  console.log(data)
   return (
-    <Layout>
-      <SEO title="Home" />
-      <h1>Hi people</h1>
-      <p>Welcome to your new Gatsby site.</p>
-      <p>Now go build something great.</p>
-      <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-        <Image />
+    <div className="container mt-5">
+      <div className="row rol-cols-2">
+        {data.swapi.post.map(post => (
+          <div className="col" key={post.id}>
+            <div className="card">
+              <div className="card-body">
+                <div className="card-title font-weight-bold">
+                  <Link
+                    className="text-dark text-decoration-none"
+                    to={`/post/${post.id}`}
+                  >
+                    {post.title}
+                  </Link>
+                </div>
+                <div className="card-text font-weight-light text-muted">
+                  {post.description}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
       </div>
-      <Link to="/page-2/">Go to page 2</Link>
-    </Layout>
+    </div>
   )
 }
 
